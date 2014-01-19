@@ -14,6 +14,7 @@ gem 'newrelic_rpm'
 
 group :development, :test do
   gem 'sqlite3', '1.3.5'
+  gem 'mysql2'
 end
 
 gem 'annotate', '2.5.0', group: :development
@@ -49,3 +50,9 @@ end
 gem 'simplecov'
 
 gem 'activeadmin'
+
+#authentication through omniauth
+gem 'omniauth'
+
+#omniauth-facebook
+gem 'omniauth-facebook'

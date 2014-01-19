@@ -28,6 +28,8 @@ class SurveyController < ApplicationController
 
     @survey = Survey.new(@survey_params)
     if @survey.save
+      #survey answers update
+      survey_answers_update(@survey.personality_type, params[:input])
       flash[:notice] = "Welcome to LeadU!"
       redirect_to root_path
     else
@@ -36,6 +38,51 @@ class SurveyController < ApplicationController
     end
 
     current_user.survey = @survey
+  end
+  
+  #survery answers update
+  def survey_answers_update(personality_type, params)
+    arr_per_type = personality_type.chars.to_a
+    if arr_per_type
+        params.each do |key,value|
+          survey_ans = SurveyAnswer.find_by_question_id(key)
+          if survey_ans
+            if( /EI-\d*/.match(key))
+              if arr_per_type[0] == 'E' and value.to_i == 1
+                survey_ans.correctly_matched += 1
+                survey_ans.total_matched += 1
+              else
+                survey_ans.total_matched += 1   
+              end
+            end
+            if( /TF-\d*/.match(key))
+              if arr_per_type[1] == 'T' and value.to_i == 1
+                survey_ans.correctly_matched += 1
+                survey_ans.total_matched += 1
+              else
+                survey_ans.total_matched += 1   
+              end
+            end
+            if( /SN-\d*/.match(key))
+              if arr_per_type[2] == 'S' and value.to_i == 1
+                survey_ans.correctly_matched += 1
+                survey_ans.total_matched += 1
+              else
+                survey_ans.total_matched += 1   
+              end
+            end
+            if( /JP-\d*/.match(key))
+              if arr_per_type[3] == 'J' and value.to_i == 1
+                survey_ans.correctly_matched += 1
+                survey_ans.total_matched += 1
+              else
+                survey_ans.total_matched += 1   
+              end
+            end
+            survey_ans.save
+          end  
+        end
+    end      
   end
 
   def destroy

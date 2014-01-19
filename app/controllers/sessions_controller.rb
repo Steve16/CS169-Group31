@@ -17,6 +17,21 @@ class SessionsController < ApplicationController
     sign_out_user
     redirect_to :root #:home #root_path #root_url?
   end
-
+  
+  #authenticate user though linkedin network
+  def auth_login
+    #begin
+      auth_hash = request.env['omniauth.auth']
+      user = Authorization.find_or_create(auth_hash)
+      # Create a session
+      @o_single = user      
+      sign_in_user @o_single
+      flash.keep[:success] = "Login successful"
+      redirect_to :survey
+    #rescue
+     # flash.keep[:alert] = "Issue with facebook login"
+      #redirect_to :signup
+   # end
+  end
 
 end

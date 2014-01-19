@@ -6,6 +6,8 @@
   .marketing
     .row-fluid
       .span4
+        %h5
+          = link_to 'Login With Facebook', "/auth/facebook", :class => 'button'
         %h3 Sign-up
         = form_for @user do |f|
           %p

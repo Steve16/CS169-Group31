@@ -24,6 +24,10 @@ CS169Group31::Application.routes.draw do
   match "follow_code" => "users#follow_code", :as => "follow_code", :via => 'get'
   match "follow_code" => 'users#followsubmit', :as => "follow_code", :via => 'post' #follow button route
 
+  get '/auth/facebook/callback', :to => 'sessions#auth_login'  
+  get '/oauth2callback', :to => 'sessions#auth_login'
+  get '/auth/failure', :to => 'sessions#dashboard'
+
   #devise_scope :admin_user do
    # delete '/admin/logout' => 'active_admin/devise/sessions#destroy'
   #end

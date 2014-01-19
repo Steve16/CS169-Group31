@@ -5,7 +5,9 @@
   .marketing
     .row-fluid
       .span4
-        %h3 Login
+        %h5 
+          = link_to 'Login With Facebook', "/auth/facebook", :class => 'button'
+        %h3 Or Login with your account
         = form_for :session, :url => {:action => "create"} do |f|
           %p
             = f.label :email, :caption => "Email"
