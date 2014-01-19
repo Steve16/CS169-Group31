@@ -43,7 +43,7 @@ class SurveyController < ApplicationController
   #survery answers update
   def survey_answers_update(personality_type, params)
     arr_per_type = personality_type.chars.to_a
-    if arr_per_type
+    if arr_per_type and params
         params.each do |key,value|
           survey_ans = SurveyAnswer.find_by_question_id(key)
           if survey_ans
