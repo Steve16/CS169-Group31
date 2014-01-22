@@ -23,6 +23,11 @@ class UsersController < ApplicationController
     @step_4 = @personality_db.step_4
     @step_5 = @personality_db.step_5
     end
+    if session[:token]
+      me = FbGraph::User.me(session[:token])
+      @facebook_friends = me.friends
+      @users_facebook_ids = User.all.map { |u| u.facebook_id }
+    end      
   end
   
   def edit #Add a code so that users can follow. ie Professors/employers use this
@@ -78,5 +83,36 @@ class UsersController < ApplicationController
       @user.errors.full_messages.each { |x| flash[:alert] << x + ",\n" }
     end
   end
-
+  
+  def facebook_invite_form
+    if request.post?
+      begin
+        user = FbGraph::User.new(params[:facebook_id], :access_token => params[:access_token])
+        user.feed!(:message => params[:message])
+        #user = FbGraph::User.me(session[:token])
+        #user.feed!(:message => params[:message], :to => params[:facebook_id])
+        flash[:success] = 'Massage has been posted successfully'
+      rescue => e
+       flash[:alert] = e.message
+      end  
+    else
+      user_survey = current_user.survey
+      @profile = nil
+      if user_survey
+        personality_type = user_survey.personality_type
+        @profile = Profile.find_by_personality_type(personality_type)
+      end      
+    end    
+  end
+  
+  def profile_tips
+   user = User.find_by_facebook_id(params[:facebook_id])
+   if user and user.survey
+     personality_type = user.survey.personality_type
+     @profile = Profile.find_by_personality_type(personality_type)
+   else
+     @profile = nil
+   end    
+  end
+  
 end

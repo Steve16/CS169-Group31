@@ -35,5 +35,6 @@ CS169Group31::Application.configure do
   # Expands the lines which load the assets
   config.assets.debug = true
   FACEBOOK_APP_ID = "573104039450517"
-  FACEBOOK_APP_SECRET = "0956e8a5b2b2e8d17b1523aac0cbe14a"  
+  FACEBOOK_APP_SECRET = "0956e8a5b2b2e8d17b1523aac0cbe14a"
+  BASE_URL = 'http://local.leadu.com/'  
 end

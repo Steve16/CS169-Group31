@@ -20,18 +20,31 @@ class SessionsController < ApplicationController
   
   #authenticate user though linkedin network
   def auth_login
-    #begin
+    begin
       auth_hash = request.env['omniauth.auth']
       user = Authorization.find_or_create(auth_hash)
       # Create a session
+      session[:token] = auth_hash['credentials']["token"]
+      session[:secret] = auth_hash['credentials']["secret"] 
       @o_single = user      
       sign_in_user @o_single
       flash.keep[:success] = "Login successful"
-      redirect_to :survey
-    #rescue
-     # flash.keep[:alert] = "Issue with facebook login"
-      #redirect_to :signup
-   # end
+      unless request.xhr?
+        redirect_to :survey
+      else
+        me = FbGraph::User.me(session[:token])
+        @facebook_friends = me.friends      
+        flash.keep[:success] = "Login successful"        
+      end  
+    rescue
+      flash.keep[:alert] = "Issue with facebook login"
+      unless request.xhr?
+        redirect_to :signup
+      else
+        @facebook_friends = nil  
+      end
+    end
   end
+ 
 
 end

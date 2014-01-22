@@ -1,0 +1,54 @@
+<div class="cl">&nbsp;</div>
+<h5>Leadership is about building better relationships with others. Share tips on working with you and have your friends signup as well!</h5>
+
+<div class="container">
+	<div class="container">
+		<div class="row-fluid">
+			<%= form_for "", :url => facebook_invite_form_path(params[:facebook_id], params[:access_token]), :remote => true, :html => { :class => '' } do |f| %>
+			  <div id="msg_alert"></div>
+				<%= hidden_field_tag "facebook_id", params[:facebook_id], :id => 'facebook_id' %>
+				<%= hidden_field_tag "access_token", params[:access_token], :id => 'access_token' %>
+				<% if @profile %>
+					<% profile_steps = "1. #{@profile.step_1}  2. #{@profile.step_2}  3. #{@profile.step_3}  4. #{@profile.step_4}  5. #{@profile.step_5} " %> 
+					<% text_message = "I'm on #{@profile.personality_type} Find out your personality type on #{BASE_URL} Tips when working with me:#{profile_steps}" %>
+				<% else %>
+					<% text_message = "Find out your personality type on #{BASE_URL}" %>
+				<% end %>	
+				<p>
+					<%=h text_area_tag "message", text_message.html_safe, :class => "textArea", :height => "20", :id => 'message' %>
+				</p>
+				<p>		
+					<%= f.button "Post to Facebook", :id => "post_facebook", :class => 'btn btn-info' %>
+				</p>	
+			
+			<% end %>
+		</div>
+	</div>		
+</div>
+
+<script src="http://connect.facebook.net/en_US/all.js"></script>
+<script type="text/javascript">
+$("#post_facebook").click(function() {
+	FB.init({
+		appId : '<%= FACEBOOK_APP_ID %>'
+	});
+	FB.api('/'+$('#facebook_id').val()+'/feed', 'post', 
+		    {
+		        method: 'feed',
+		        message: $('#message').val(),
+		        name: 'LeadU',
+		        caption: 'LeadU',
+		        description: 'LeadU',
+		        link: '<%= BASE_URL %>',
+		        picture: '',                   
+		    },
+		     function(response) {
+		      if (!response || response.error) {
+		        //alert('Error occured');
+		      } else {
+		        //alert('Post ID: ' + response.id);
+		      }
+		});
+});        
+
+</script>        

@@ -65,5 +65,6 @@ CS169Group31::Application.configure do
   # with SQLite, MySQL, and PostgreSQL)
   # config.active_record.auto_explain_threshold_in_seconds = 0.5
   FACEBOOK_APP_ID = "628121550556632"
-  FACEBOOK_APP_SECRET = "b2f82d474dd6d078dc4900924752dbcd"  
+  FACEBOOK_APP_SECRET = "b2f82d474dd6d078dc4900924752dbcd"
+  BASE_URL = 'http://leadu.danmulhern.com/'  
 end

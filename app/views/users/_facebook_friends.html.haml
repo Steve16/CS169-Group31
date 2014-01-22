@@ -1,0 +1,23 @@
+- unless session[:token]
+  = link_to 'Connect to Facebook', "/auth/facebook", :class => 'button'
+- else
+  .div{id: "facebook_friends"}
+    %h5= "Facebook Friends"
+    %table
+      - @facebook_friends.each do |f|
+        %tr
+          %td
+            - if @users_facebook_ids.include? f.raw_attributes["id"]
+              = f.raw_attributes["name"] + " | "
+              = link_to get_user_personality_type(f.raw_attributes["id"]), BASE_URL+"profile_tips/"+f.raw_attributes["id"]+"?iframe=true&width=50%&height=70%", :class => 'button', :rel => "prettyPhoto[iframes]"
+            - else   
+              = f.raw_attributes["name"] + " | "
+              = link_to 'Invite', BASE_URL+"facebook_invite_form/"+f.raw_attributes["id"]+"/"+f.access_token+"?iframe=true&width=50%&height=70%", :class => 'button', :rel => "prettyPhoto[iframes]"
+              .div{:id => "inline-#{f.raw_attributes['id']}", :style => "display:none;"}
+                %p= "test"
+              
+%script{:type => "text/javascript"}
+  $(document).ready(function(){
+  $("a[rel^='prettyPhoto[iframes]']").prettyPhoto();
+  $("#example").popover();
+  });

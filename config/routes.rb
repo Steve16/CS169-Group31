@@ -27,6 +27,14 @@ CS169Group31::Application.routes.draw do
   get '/auth/facebook/callback', :to => 'sessions#auth_login'  
   get '/oauth2callback', :to => 'sessions#auth_login'
   get '/auth/failure', :to => 'sessions#dashboard'
+  
+  get '/auth/facebook/callback', :to => 'sessions#auth_login'  
+  get '/oauth2callback', :to => 'sessions#auth_login'
+  get '/auth/failure', :to => 'sessions#dashboard'  
+  
+  match "facebook_invite_form/:facebook_id/:access_token" => "users#facebook_invite_form", :as => "facebook_invite_form", :via => [:get, :post, :patch]
+  get "profile_tips/:facebook_id" => "users#profile_tips", :as => "profile_tips"
+  
 
   #devise_scope :admin_user do
    # delete '/admin/logout' => 'active_admin/devise/sessions#destroy'

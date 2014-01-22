@@ -1,13 +1,19 @@
 = render("static_pages/navigation.html.haml")
 .container
-  .marketing    
-    %h2{:style=>'text-align: center'} Let's learn more about your personality!    
-    %h3{:style=>'text-align:center'}
-      Welcome #{@user.first_name}! Your personality type is: #{@user.survey.personality_type}
-    %center
-      %iframe{:width => "560", :height => "315",:frameborder => "0", :src =>"http://www.youtube.com/embed/#{@video_url}",:allowFullScreen => ""}
-    %br    
-    %div{:class => 'row'}    
-      %div{:class => 'span8 offset2'}
-        #{@body}
+  .marketing
+    %table
+      %tr
+        %td{:width => "80%", :valign => "top"}    
+          %h2{:style=>'text-align: center'} Let's learn more about your personality!    
+          %h3{:style=>'text-align:center'}
+            Welcome #{@user.first_name}! Your personality type is: #{@user.survey.personality_type}
+          %center
+            %iframe{:width => "560", :height => "315",:frameborder => "0", :src =>"http://www.youtube.com/embed/#{@video_url}",:allowFullScreen => ""}
+          %br    
+          %div{:class => 'row'}    
+            %div{:class => 'span6 offset2'}
+              #{@body}
+        %td{:style => "border:1px solid #000; margin-top: 110px; float: right; padding: 20px;"}              
+          %div{:class => 'span4 offset2'}
+          = render 'facebook_friends'
 

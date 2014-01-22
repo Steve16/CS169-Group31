@@ -1026,3 +1026,8 @@ form.bs-docs-example {
     float: none;
   }
 }
+
+.textArea {
+	width: 500px;
+	height: 200px;
+}

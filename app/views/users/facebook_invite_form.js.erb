@@ -1,0 +1,9 @@
+<% if flash[:success] %>
+	$("#msg_alert").html("<%= flash[:success] %>");
+	$("#msg_alert").addClass("success");
+<% end %>
+
+<% if flash[:alert] %>
+	$("#msg_alert").html("<%= flash[:alert] %>");
+	$("#msg_alert").addClass("error");
+<% end %>		

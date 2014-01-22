@@ -56,3 +56,5 @@ gem 'omniauth'
 
 #omniauth-facebook
 gem 'omniauth-facebook'
+
+gem 'fb_graph'
